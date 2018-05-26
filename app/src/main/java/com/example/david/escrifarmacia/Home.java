@@ -1,5 +1,6 @@
 package com.example.david.escrifarmacia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -37,6 +38,8 @@ public class Home extends AppCompatActivity
 
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
+
+    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +90,9 @@ public class Home extends AppCompatActivity
     }
 
     //Para cargar las categorias de venta .. menu
+    //Una ves hecho click en una categoria se muestra otra nueva lista del contenido dentro
     private void loadMenu(){
-        FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
+        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.txtMenuName.setText(model.getName());
@@ -98,7 +102,12 @@ public class Home extends AppCompatActivity
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Home.this, ""+clickItem.getName(), Toast.LENGTH_SHORT).show();
+                        //Obtenemos la CategoryId y la enviamos a nuestra nueva Activity
+                        Intent medicamentList = new Intent(Home.this, MedicamentList.class);
+
+                        //Porque CategoryId es la llave, asi que solo obtendremos la llade de este lugar
+                        medicamentList.putExtra("CategoryId", adapter.getRef(position).getKey());
+                        startActivity(medicamentList);
                     }
                 });
             }
