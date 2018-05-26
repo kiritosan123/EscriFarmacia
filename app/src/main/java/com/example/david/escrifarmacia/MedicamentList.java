@@ -1,5 +1,6 @@
 package com.example.david.escrifarmacia;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,7 +66,11 @@ public class MedicamentList extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(MedicamentList.this, ""+local.getName(), Toast.LENGTH_SHORT).show();
+                        //Iniciamos nuestra Activity nuevo
+                        Intent medicamentDetail = new Intent(MedicamentList.this, MedicamentDetail.class);
+                        //enviamos el id del medicamento a la nueva actividad
+                        medicamentDetail.putExtra("MedicamentId", adapter.getRef(position).getKey()); //
+                        startActivity(medicamentDetail);
                     }
                 });
             }

@@ -26,7 +26,7 @@
             android:id="@+id/nav_turn"
             android:icon="@drawable/ic_security_black_24dp"
             android:iconTint="@android:color/white"
-            android:title="Desconectar" />
+            android:title="Farmacias de Turno" />
 
         <item
             android:id="@+id/nav_log_out"

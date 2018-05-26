@@ -24,7 +24,8 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".MedicamentList"></activity>
+        <activity android:name=".MedicamentList" />
+        <activity android:name=".MedicamentDetail"></activity>
     </application>
 
 </manifest>
