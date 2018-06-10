@@ -4,11 +4,15 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.david.escrifarmacia.Database.Database;
 import com.example.david.escrifarmacia.Model.Medicament;
+import com.example.david.escrifarmacia.Model.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +34,8 @@ public class MedicamentDetail extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference medicament;
 
+    Medicament currentMedicament;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,20 @@ public class MedicamentDetail extends AppCompatActivity {
         //Inicamos la vista (view)
         numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
         btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Database(getBaseContext()).addToCart(new Order(
+                        medicamentId,
+                        currentMedicament.getName(),
+                        numberButton.getNumber(),
+                        currentMedicament.getPrice(),
+                        currentMedicament.getDiscount()
+                ));
+                Toast.makeText(MedicamentDetail.this, "Se adiciono al Carrito", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         medicament_description = (TextView)findViewById(R.id.medicament_description);
         medicament_name = (TextView)findViewById(R.id.medicament_name);
@@ -64,19 +84,19 @@ public class MedicamentDetail extends AppCompatActivity {
         medicament.child(medicamentId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Medicament medicament = dataSnapshot.getValue(Medicament.class);
+                currentMedicament = dataSnapshot.getValue(Medicament.class);
 
                 //Establecer imagen
-                Picasso.with(getBaseContext()).load(medicament.getImage())
+                Picasso.with(getBaseContext()).load(currentMedicament.getImage())
                         .into(medicament_image);
                 //Establecemos el titulo
-                collapsingToolbarLayout.setTitle(medicament.getName());
+                collapsingToolbarLayout.setTitle(currentMedicament.getName());
                 //Establecemos el precio
-                medicament_price.setText(medicament.getPrice());
+                medicament_price.setText(currentMedicament.getPrice());
                 //Establecemos el nombre
-                medicament_name.setText(medicament.getName());
+                medicament_name.setText(currentMedicament.getName());
                 //Establecemos el precio
-                medicament_description.setText(medicament.getDescription());
+                medicament_description.setText(currentMedicament.getDescription());
 
 
             }
