@@ -66,7 +66,7 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/btnSignUp"
-        android:text="Sign Up"
+        android:text="Registraste"
         android:textColor="@android:color/white"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
