@@ -55,6 +55,7 @@ public class SignIn extends AppCompatActivity {
                             //Obtenemos la Informacion del usuario
                             mDialog.dismiss();
                             User user = dataSnapshot.child(edtPhone.getText().toString()).getValue(User.class);
+                            user.setPhone(edtPhone.getText().toString()); //Establecemos el telefono como otro medio
                             if(user.getPassword().equals(edtPassword.getText().toString())){
                                 Intent homeIntent = new Intent(SignIn.this, Home.class);
                                 Common.currentUser = user;

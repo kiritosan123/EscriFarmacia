@@ -46,6 +46,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
 
+    //adicionando soporte para SQLite
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }
 
 apply plugin: 'com.google.gms.google-services'
